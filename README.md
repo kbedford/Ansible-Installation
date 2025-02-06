@@ -1,64 +1,74 @@
-# Ansible-Installation
+Below is an install_ansible_junos.py script you can run as root (or via sudo) to automatically:
 
-Below is a concise summary of the steps you took to successfully install Ansible and the required Juniper libraries (`junos-eznc` and `jxmlease`) on your Ubuntu 22.04 system:
+      1.Update your Ubuntu packages
+      2.Install system prerequisites
+      3.Install or update Ansible
+      4.Downgrade setuptools (to avoid a known conflict with ncclient)
+      5.Install ncclient from GitHub
+      6.Install junos-eznc and jxmlease
+      7.Verify the installations
+     ```
+Below is an example **Python 3 script** you can run **as root** (or via `sudo`) to automatically:
 
-1. **Install & Update Dependencies**  
-   - Ran standard updates and installed the basic development tools to ensure you had the prerequisites for building Python modules:
-     ```bash
-     sudo apt update
-     sudo apt install -y python3-pip python3-dev python3-venv libxml2-dev libxslt1-dev libssl-dev libffi-dev build-essential
-     ```
-   - Upgraded `pip`, `setuptools`, and `wheel` (even though some version conflicts remained):
-     ```bash
-     pip3 install --upgrade pip setuptools wheel
-     ```
+1. Update your Ubuntu packages  
+2. Install system prerequisites  
+3. Install or update Ansible  
+4. Downgrade `setuptools` (to avoid a known conflict with `ncclient`)  
+5. Install `ncclient` from GitHub  
+6. Install `junos-eznc` and `jxmlease`  
+7. Verify the installations  
 
-2. **Install/Verify Ansible**  
-   - Installed Ansible from Ubuntu repositories (or it was already present):
-     ```bash
-     sudo apt update
-     sudo apt install ansible -y
-     ```
-   - Confirmed installation via:
-     ```bash
-     ansible --version
-     root@ubuntu-22-04:~# ansible --version
-      ansible 2.10.8
-      config file = None
-      configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-      ansible python module location = /usr/lib/python3/dist-packages/ansible
-      executable location = /usr/bin/ansible
-      python version = 3.10.12 (main, Jan 17 2025, 14:35:34) [GCC 11.4.0]
-     ```
+You can copy and paste the script into a file (e.g., `install_ansible_junos.py`) and then run it with `sudo python3 install_ansible_junos.py`.
 
-3. **Address `setuptools` Version Conflict**  
-   - Encountered errors with the `ncclient` package that required a specific `setuptools` version.  
-   - Downgraded `setuptools` to avoid the `canonicalize_version()` conflict:
-     ```bash
-     pip3 install --upgrade "setuptools<66"
-     ```
+### **How to Use**
 
-4. **Manually Install `ncclient`**  
-   - Instead of installing the older pinned `ncclient==0.6.15`, you installed the latest `ncclient` directly from GitHub to bypass the setup error:
-     ```bash
-     pip3 install git+https://github.com/ncclient/ncclient.git@master
-     ```
+1. **Save the Script**  
+   Copy the script into a file called `install_ansible_junos.py`.
 
-5. **Install `junos-eznc` and `jxmlease`**  
-   - With the above adjustments in place, you were finally able to install:
-     ```bash
-     pip3 install junos-eznc jxmlease
-     ```
+2. **Make It Executable (Optional)**  
+   ```bash
+   chmod +x install_ansible_junos.py
+   ```
 
-6. **Verification**  
-   - Confirmed that both libraries installed successfully by importing them in a Python one-liner:
-     ```bash
-     python3 -c "import jnpr.junos; print('junos-eznc installed successfully')"
-     python3 -c "import jxmlease; print('jxmlease installed successfully')"
-     root@ubuntu-22-04:~# python3 -c "import jnpr.junos; print('junos-eznc installed successfully')"
-      junos-eznc installed successfully
-      root@ubuntu-22-04:~# python3 -c "import jxmlease; print('jxmlease installed successfully')"
-      jxmlease installed successfully
-     ```
+3. **Run the Script as Root**  
+   ```bash
+   sudo python3 install_ansible_junos.py
+   ```
+   or
+   ```bash
+   sudo ./install_ansible_junos.py
+   ```
 
-These steps resolved the conflicts between Python packages and allowed you to install Ansible along with the Juniper Python libraries needed for interacting with Junos and JunosEvo.
+4. **Verify Ansible Version**  
+   After successful completion, confirm Ansible is installed:
+   ```bash
+   ansible --version
+   ```
+
+5. **Use Ansible with Junos**  
+   You can now create your `inventory` and `playbooks` to manage Junos/Evo devices.
+
+---
+
+### **What This Script Does**
+
+1. **System Update & Package Installation**  
+   - Updates apt repositories (`apt update`)  
+   - Upgrades existing packages (`apt upgrade`)  
+   - Installs Python build tools, libraries, and **Ansible**.
+
+2. **Downgrades `setuptools`**  
+   - Installs a version of `setuptools` (<66) to avoid the `canonicalize_version()` conflict when building `ncclient`.
+
+3. **Installs `ncclient` from GitHub**  
+   - Installs the latest `ncclient` code from GitHub to bypass metadata-generation issues with older pinned versions (`ncclient==0.6.15`).
+
+4. **Installs `junos-eznc` and `jxmlease`**  
+   - Installs the official Juniper Python library (`junos-eznc`) and `jxmlease` for working with Junos devices.
+
+5. **Verifies the Installation**  
+   - Imports both `jnpr.junos` and `jxmlease` in Python to confirm successful installation.
+
+---
+
+You should now have **Ansible** and all **Juniper-related Python packages** installed and working on your Ubuntu 22.04 system. Enjoy automating your Junos devices!
