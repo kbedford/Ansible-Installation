@@ -1,15 +1,5 @@
 Below is an install_ansible_junos.py script you can run as root (or via sudo) to automatically:
 
-      1.Update your Ubuntu packages
-      2.Install system prerequisites
-      3.Install or update Ansible
-      4.Downgrade setuptools (to avoid a known conflict with ncclient)
-      5.Install ncclient from GitHub
-      6.Install junos-eznc and jxmlease
-      7.Verify the installations
-     ```
-Below is an example **Python 3 script** you can run **as root** (or via `sudo`) to automatically:
-
 1. Update your Ubuntu packages  
 2. Install system prerequisites  
 3. Install or update Ansible  
