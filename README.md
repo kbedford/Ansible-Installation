@@ -58,6 +58,7 @@ You can copy and paste the script into a file (e.g., `install_ansible_junos.py`)
 
 5. **Verifies the Installation**  
    - Imports both `jnpr.junos` and `jxmlease` in Python to confirm successful installation.
+![image](https://github.com/user-attachments/assets/1c7660fe-defd-452a-9543-cc8c98d9b2c0)
 
 ---
 
